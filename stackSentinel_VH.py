@@ -634,7 +634,7 @@ def interferogramStack(inps, acquisitionDates, stackReferenceDate, secondaryDate
     runObj.write('rm -rf '+inps.work_dir+'/merged/SLC_*\n')
     runObj.close()
     os.chmod(inps.work_dir+'/run_files/run_{:02d}_deleteThings'.format(i),stat.S_IRWXU)
-    #add to runstuff file
+    #add to runstuff2 file
     runf2 = open(inps.work_dir+'/runstuff2','a+')
     runf2.write('python cropAll.py\n')
     runf2.write(inps.work_dir+'/run_files/run_{:02d}_deleteThings'.format(i)+'\n')

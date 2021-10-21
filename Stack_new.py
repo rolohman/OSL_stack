@@ -305,7 +305,11 @@ class run(object):
         
         if notFound:
             runf2 = open(self.work_dir+'/runstuff','a+')
-            runf2.write(self.work_dir+'/run_files/'+runName+' > '+self.work_dir+'/run_files/'+runName+'.out\n')
+            runf2.write('if test -f "'+self.work_dir+'/run_files/'+runName+'.out"; then\n')
+            runf2.write('     echo "'+runName+' done"\n')
+            runf2.write('else\n')
+            runf2.write('      '+self.work_dir+'/run_files/'+runName+' > '+self.work_dir+'/run_files/'+runName+'.out 2> '+self.work_dir+'/run_files/'+runName+'.errout\n')
+            runf2.write('fi\n')
             runf2.close()
 
     #def unpackSLC(self, acquisitionDates, safe_dict):
@@ -553,7 +557,8 @@ class run(object):
     def extractStackValidRegion(self):
         referenceDir = os.path.join(self.work_dir, 'reference/vv')
         coregSecondaryDir = os.path.join(self.work_dir, 'coreg_secondarys/vv')
-        self.runf.write(self.text_cmd + 'extractCommonValidRegion.py -m ' + referenceDir + ' -s ' + coregSecondaryDir + '\n')
+        stackDir = os.path.join(self.work_dir, 'stack')
+        self.runf.write(self.text_cmd + 'extractCommonValidRegion_new.py -m ' + referenceDir + ' -s ' + coregSecondaryDir + ]' -t ' + stackDir +'\n')
 
     def generate_burstIgram(self, dateList, safe_dict, pairs):
 
