@@ -9,38 +9,35 @@ from osgeo import gdal
 bb=[2000, 4000, 28000, 3000]
 
 workDir='/home/jovyan/Oman'
-oldDirs = ['SLC_VV','SLC_VH','geom_reference']
+oldDirs = ['SLC_vv','SLC_vh','geom_reference']
 
 for searchDir in oldDirs:
     testdir = os.path.join(workDir,'merged',searchDir)
-    if re.search(r'SLC',searchDir):
-        for dateDir in os.listdir(testdir):
-            if re.search(r'\d{8}', dateDir):
-                oldDir=os.path.join(testdir,dateDir);
-                newDir=os.path.join(workDir,'cropped',searchDir,dateDir);
-                try:
-                    os.makedirs(newDir)
-                except OSError as error:
-                    print(newDir,' already created')
- 
-                for file in os.listdir(oldDir):
-                    if file.endswith("slc.full"):
-                        newfile=os.path.join(newDir,file)
-                        ds = gdal.Open(os.path.join(oldDir,file))
-                        ds = gdal.Translate(newfile, ds, srcWin = bb,format='ISCE')
-                        ds = None
+    if os.path.isdir(testdir):
+        if re.search(r'SLC',searchDir):
+            for dateDir in os.listdir(testdir):
+                if re.search(r'\d{8}', dateDir):
+                    oldDir=os.path.join(testdir,dateDir);
+                    newDir=os.path.join(workDir,'cropped',searchDir,dateDir);
+                    os.makedirs(newDir, exist_ok=True)
+                
+                    for file in os.listdir(oldDir):
+                        if file.endswith("slc.full"):
+                            print('cropping '+os.path.join(oldDir,file))
+                            newfile=os.path.join(newDir,file)
+                            ds = gdal.Open(os.path.join(oldDir,file))
+                            ds = gdal.Translate(newfile, ds, srcWin = bb,format='ISCE')
+                            ds = None
                     
-    else:
-        oldDir=testdir
-        newDir=os.path.join(workDir,'cropped',searchDir);
-        try:
-            os.makedirs(newDir)
-        except OSError as error:
-            print(newDir,' already created')
- 
-        for file in os.listdir(oldDir):
-            if file.endswith("rdr") and re.match(r'\w{3}\.',file):
-                newfile=os.path.join(newDir,file)
-                ds = gdal.Open(os.path.join(oldDir,file))
-                ds = gdal.Translate(newfile, ds, srcWin = bb,format='ISCE')
-                ds = None
+        else:
+            oldDir=testdir
+            newDir=os.path.join(workDir,'cropped',searchDir);
+            os.makedirs(newDir, exist_ok=True)
+           
+            for file in os.listdir(oldDir,):
+                if file.endswith("rdr") and re.match(r'\w{3}\.',file):
+                    print('cropping '+os.path.join(oldDdir,file))
+                    newfile=os.path.join(newDir,file)
+                    ds = gdal.Open(os.path.join(oldDir,file))
+                    ds = gdal.Translate(newfile, ds, srcWin = bb,format='ISCE')
+                    ds = None
