@@ -22,8 +22,10 @@ def createParser():
 
     parser.add_argument('-s', '--secondary', dest='secondary', type=str, required=True,
             help='Directory with secondary acquisition')
+    
     parser.add_argument('-t', '--stackdir', dest='stackDir', type=str, required=True,
             help='Directory for stack info')
+    
     return parser
 
 def cmdLineParse(iargs = None):
@@ -102,7 +104,7 @@ def main(iargs=None):
     '''extract common valid overlap region for the stack.
     '''
     inps=cmdLineParse(iargs)
-
+    stackDir = inps.stackDir
     #stackDir = os.path.join(os.path.dirname(inps.reference),'stack')
     if not os.path.exists(stackDir):
         print('creating ', stackDir)
