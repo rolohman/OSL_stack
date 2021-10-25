@@ -35,7 +35,7 @@ for searchDir in oldDirs:
             os.makedirs(newDir, exist_ok=True)
            
             for file in os.listdir(oldDir,):
-                if file.endswith("rdr") and re.match(r'\w{3}\.',file):
+                if file.endswith("rdr.full") and re.match(r'\w{3}\.',file):
                     print('cropping '+os.path.join(oldDdir,file))
                     newfile=os.path.join(newDir,file)
                     ds = gdal.Open(os.path.join(oldDir,file))
