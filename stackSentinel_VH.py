@@ -575,7 +575,7 @@ def interferogramStack(inps, acquisitionDates, stackReferenceDate, secondaryDate
     inps.polarization='vv'
     runObj = run()
     runObj.configure(inps, 'run_{:02d}_merge_reference_secondary_slc'.format(i))
-    #runObj.mergeReference(stackReferenceDate, virtual = 'False')
+    runObj.mergeReference(stackReferenceDate, virtual = 'False')
     runObj.mergeSecondarySLC(newAcquisitions, virtual = 'False')
     runObj.finalize()
     
