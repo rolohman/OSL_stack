@@ -558,7 +558,7 @@ class run(object):
         referenceDir = os.path.join(self.work_dir, 'reference/vv')
         coregSecondaryDir = os.path.join(self.work_dir, 'coreg_secondarys/vv')
         stackDir = os.path.join(self.work_dir, 'stack')
-        self.runf.write(self.text_cmd + '/home/jovyan/extractCommonValidRegion_new.py -m ' + referenceDir + ' -s ' + coregSecondaryDir + ' -t ' + stackDir +'\n')
+        self.runf.write(self.text_cmd + 'extractCommonValidRegion_new.py -m ' + referenceDir + ' -s ' + coregSecondaryDir + ' -t ' + stackDir +'\n')
 
     def generate_burstIgram(self, dateList, safe_dict, pairs):
 
