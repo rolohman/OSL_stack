@@ -679,7 +679,7 @@ class run(object):
                 configName = os.path.join(self.config_path,'config_merge_' + pattern.split('*')[0])
                 configObj = config(configName)
                 configObj.configure(self)
-                configObj.reference = os.path.join(self.work_dir, 'reference')
+                configObj.reference = os.path.join(self.work_dir, 'reference/'+self.polarization)
                 configObj.dirName = os.path.join(self.work_dir, 'geom_reference')
                 configObj.namePattern = pattern
                 configObj.mergedFile = os.path.join(self.work_dir, 'merged/geom_reference/' + pattern.split('*')[0] + '.' +pattern.split('*')[1])
