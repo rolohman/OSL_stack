@@ -621,10 +621,11 @@ def interferogramStack(inps, acquisitionDates, stackReferenceDate, secondaryDate
     runObj = open(os.path.join(inps.work_dir,'run_files','run_{:02d}_deleteThings'.format(i)),'w+')
     deleteDates = secondaryDates.copy()
     deleteDates.pop() #remove last date to save
-    suffs = ('*.off','*.slc','overlaps/*off')
+    suffs = ('*.off','*.slc')
     for date in deleteDates:
         print('Will delete files from:'+date)
         runObj.write('rm '+safe_dict[date].safe_file+'\n')
+        runObj.write('rm '+inps.work_dir+'/coreg_secondarys/*/'+date+'/overlap/*/*off\n')
         for suff in suffs:
             runObj.write('rm '+inps.work_dir+'/coreg_secondarys/*/'+date+'/*/'+suff+'\n')
         
@@ -636,7 +637,7 @@ def interferogramStack(inps, acquisitionDates, stackReferenceDate, secondaryDate
     os.chmod(inps.work_dir+'/run_files/run_{:02d}_deleteThings'.format(i),stat.S_IRWXU)
     #add to runstuff2 file
     runf2 = open(inps.work_dir+'/runstuff2','a+')
-    runf2.write('python cropAll.py\n')
+    runf2.write('cropAll.py\n')
     runf2.write(inps.work_dir+'/run_files/run_{:02d}_deleteThings'.format(i)+'\n')
     runf2.close()
     os.chmod(inps.work_dir+'/runstuff',stat.S_IRWXU)
